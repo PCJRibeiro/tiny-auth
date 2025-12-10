@@ -24,14 +24,14 @@ export default async function handler(req, res) {
 
     const data = await tokenRes.json();
 
-    await kv.set("tiny_refresh_token", data.refresh_token);
+    
 
     return res.status(200).json({
       status: "OK",
       message: "Token recebido com sucesso!",
       token: data
     });
-
+    await kv.set("tiny_refresh_token", data.refresh_token);
   } catch (err) {
     return res.status(500).json({
       error: "Erro ao trocar code por token.",
