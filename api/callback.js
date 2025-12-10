@@ -1,4 +1,5 @@
 import { TINY } from "../tiny_config.js";
+import {kv} from "@vercel/kv";
 
 export default async function handler(req, res) {
   const { code } = req.query;
@@ -22,6 +23,8 @@ export default async function handler(req, res) {
     });
 
     const data = await tokenRes.json();
+
+    await kv.set("tiny_refresh_token", data.refresh_token);
 
     return res.status(200).json({
       status: "OK",
